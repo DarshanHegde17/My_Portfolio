@@ -117,7 +117,7 @@ fetchData().then(data => {
 });
 
 // <!-- tilt js effect starts (hero/about only — keeps project GitHub links clickable) -->
-VanillaTilt.init(document.querySelectorAll(".home .tilt, .about .tilt"), {
+VanillaTilt.init(document.querySelectorAll(".about .tilt"), {
     max: 15,
 });
 // <!-- tilt js effect ends -->

@@ -49,22 +49,110 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
 }
-  font-family: "Poppins", sans-serif;
-  position: relative;
-}
 
-/* Galaxy Canvas Background */
 #galaxyCanvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
+}
+
+/* ===== Full-page 3D experience ===== */
+body.page-3d {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+
+body.page-3d header {
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 24px rgba(255, 140, 0, 0.25);
+}
+
+section.scene-section {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  background: linear-gradient(
+    165deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(12, 8, 24, 0.78) 50%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 140, 0, 0.18);
+  border-bottom: 1px solid rgba(255, 140, 0, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  will-change: transform;
+}
+
+section.scene-section.home {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  box-shadow: none;
+}
+
+section.scene-section.about,
+section.scene-section.skills,
+section.scene-section.education,
+section.scene-section.work,
+section.scene-section.certificates,
+section.scene-section.experience {
+  background: linear-gradient(
+    165deg,
+    rgba(0, 0, 0, 0.62) 0%,
+    rgba(18, 10, 32, 0.82) 45%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+section.scene-section .heading {
+  transform-style: preserve-3d;
+  text-shadow: 0 0 30px rgba(255, 140, 0, 0.35);
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  will-change: transform;
+}
+
+.card-3d.is-visible {
+  opacity: 1 !important;
+}
+
+.card-3d:hover {
+  box-shadow: 0 24px 48px rgba(255, 140, 0, 0.2),
+    0 0 40px rgba(68, 136, 255, 0.15);
+}
+
+.home .content,
+.home .image {
+  transform-style: preserve-3d;
+}
+
+.home .content h2 {
+  text-shadow: 0 0 40px rgba(255, 140, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.8);
+}
+
+.home .image img {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(255, 140, 0, 0.25);
+}
+
+#scroll-top {
+  z-index: 1001;
 }
 
 *::selection {
@@ -482,7 +570,7 @@ header .navbar ul li a:hover {
 
 /* about section starts */
 .about {
-  background: #1a1a1a;
+  background: transparent;
 }
 .about .row {
   display: flex;
@@ -601,7 +689,7 @@ header .navbar ul li a:hover {
 /* skills section starts */
 .skills {
   min-height: 90vh;
-  background: linear-gradient(to bottom, #000, #1a1a1a);
+  background: transparent;
 }
 .skills .container .bar .info span {
   color: var(--text-color);
@@ -673,7 +761,7 @@ header .navbar ul li a:hover {
 
 /* education section starts */
 .education {
-  background: #000;
+  background: transparent;
   min-height: 80vh;
 }
 .education .qoute {
@@ -783,8 +871,7 @@ header .navbar ul li a:hover {
 
 /* work section starts */
 .work {
-  /* background: #010124; */
-  background: linear-gradient(to bottom, #1a1a1a, #000);
+  background: transparent;
 }
 .work h2 {
   padding: 1rem;
@@ -921,7 +1008,7 @@ header .navbar ul li a:hover {
 
 /* experience section starts */
 .experience {
-  background: var(--bg-color);
+  background: transparent;
 }
 .experience .timeline {
   position: relative;
@@ -1259,7 +1346,11 @@ form .button-area {
 .footer {
   min-height: auto;
   padding-top: 0;
-  background: #000;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 2;
 }
 .footer .box-container {
   display: flex;
@@ -1404,7 +1495,7 @@ form .button-area {
 /* Certificates Section */
 .certificates {
     padding: 10rem 9% 2rem;
-    background: var(--bg-color);
+    background: transparent;
 }
 
 .certificates .box-container {
@@ -1528,8 +1619,10 @@ html {
     transform: translateZ(1px);
 }
 
-/* 3D Card Transform on Scroll
-
+/* 3D Card Transform on Scroll */
+.card-3d-tilt {
+  transform-style: preserve-3d;
+}
 
 /* Fix About Section Image */
 .about .image img {

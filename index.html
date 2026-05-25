@@ -15,7 +15,7 @@
     <link id='favicon' rel="shortcut icon" href="./assets/images/favicon.jpg" type="image/x-png">
     <title>Portfolio | Darshan Hegde</title>
 </head>
-<body class="loading">
+<body class="loading page-3d">
 <!-- Loading Bar at Top -->
 <div class="loading-bar-container">
   <div class="loading-bar"></div>
@@ -58,7 +58,7 @@ document.body.scrollTop = 0;
 
 
 <!-- hero section starts -->
-<section class="home" id="home">
+<section class="home scene-section" id="home">
     <div id="particles-js"></div>
 
     <div class="content">
@@ -84,7 +84,7 @@ document.body.scrollTop = 0;
 
 
 <!-- about section starts -->
-<section class="about" id="about">
+<section class="about scene-section" id="about">
     <h2 class="heading"><i class="fas fa-user-alt"></i> About <span>Me</span></h2>
     
     <div class="row">
@@ -128,7 +128,7 @@ document.body.scrollTop = 0;
 <!-- about section ends -->
 
 <!-- skills section starts -->
-<section class="skills" id="skills">
+<section class="skills scene-section" id="skills">
 
     <h2 class="heading"><i class="fas fa-laptop-code"></i> Skills & <span>Abilities</span></h2>
 
@@ -253,7 +253,7 @@ document.body.scrollTop = 0;
 
 
 <!-- education section starts -->
-<section class="education" id="education">
+<section class="education scene-section" id="education">
 
   <h1 class="heading"><i class="fas fa-graduation-cap"></i> My <span>Education</span></h1>
 
@@ -302,7 +302,7 @@ document.body.scrollTop = 0;
 
 
 <!-- work project section starts -->
-<section class="work" id="work">
+<section class="work scene-section" id="work">
 
   <h2 class="heading"><i class="fas fa-laptop-code"></i> Projects <span>Made</span></h2>
 
@@ -417,7 +417,7 @@ document.body.scrollTop = 0;
 <!-- work project section ends -->
 
 <!-- certificates section starts -->
-<section class="certificates" id="certificates">
+<section class="certificates scene-section" id="certificates">
 
   <h2 class="heading"><i class="fas fa-award"></i> My <span>Certificates</span></h2>
 
@@ -507,7 +507,7 @@ document.body.scrollTop = 0;
 <!-- certificates section ends -->
 
 <!-- my skill section starts -->
-<section class="experience" id="experience">
+<section class="experience scene-section" id="experience">
 
   <h2 class="heading"><i class="fas fa-laptop-code"></i> My Skills </h2>
 
@@ -659,6 +659,7 @@ document.body.scrollTop = 0;
 <!-- ==== ALL MAJOR JAVASCRIPT CDNS ENDS ==== -->
 
 <script src="./assets/js/script.js"></script>
+<!-- scene-3d.js loads after Three.js background module -->
 
 <!-- Earth Loader Script -->
 <script type="module">
@@ -854,6 +855,10 @@ setTimeout(() => {
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 const canvas = document.getElementById("spaceCanvas");
+if (!canvas) {
+  console.warn("spaceCanvas not found");
+} else {
+
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x000006, 0.018);
 
@@ -1074,22 +1079,41 @@ for (let i = 0; i < 22; i++) createMeteor();
 
 let scrollY = window.scrollY;
 let targetScrollY = window.scrollY;
+let mouseX = 0;
+let mouseY = 0;
+let targetMouseX = 0;
+let targetMouseY = 0;
 
 window.addEventListener("scroll", () => {
   targetScrollY = window.scrollY;
-});
+}, { passive: true });
+
+window.addEventListener("mousemove", (e) => {
+  targetMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+}, { passive: true });
 
 function updateScrollCamera() {
   scrollY += (targetScrollY - scrollY) * 0.07;
-  const maxScroll = document.body.scrollHeight - window.innerHeight;
+  mouseX += (targetMouseX - mouseX) * 0.06;
+  mouseY += (targetMouseY - mouseY) * 0.06;
+
+  const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1);
   const progress = scrollY / maxScroll;
 
-  camera.position.z = 12 - progress * 130;
-  camera.position.x = Math.sin(progress * Math.PI * 4) * 3.2;
-  camera.position.y = Math.cos(progress * Math.PI * 3) * 1.4;
-  camera.rotation.z = Math.sin(progress * Math.PI * 2) * 0.04;
+  const baseX = Math.sin(progress * Math.PI * 4) * 3.2;
+  const baseY = Math.cos(progress * Math.PI * 3) * 1.4;
+  const baseZ = 12 - progress * 130;
 
-  stars.rotation.y = progress * 2.2;
+  camera.position.x = baseX + mouseX * 2.5;
+  camera.position.y = baseY + mouseY * 1.8;
+  camera.position.z = baseZ;
+  camera.rotation.z = Math.sin(progress * Math.PI * 2) * 0.04 + mouseX * 0.02;
+
+  const lookZ = -35 - progress * 95;
+  camera.lookAt(baseX * 0.3, baseY * 0.3, lookZ);
+
+  stars.rotation.y = progress * 2.2 + mouseX * 0.15;
   galaxy.rotation.y = progress * 4.2;
   galaxy.rotation.z = progress * 1.5;
 }
@@ -1145,7 +1169,11 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
+
+} /* end spaceCanvas */
 </script>
+
+<script src="./assets/js/scene-3d.js"></script>
 
 </body>
 </html>
