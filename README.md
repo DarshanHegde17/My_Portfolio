@@ -14,6 +14,8 @@ Personal portfolio website with a space-themed 3D background, interactive hero s
 - **Responsive layout** — Mobile navigation, smooth scrolling, scroll spy, and ScrollReveal animations
 ## Project structure
 
+
+
 ```text
 myPortolio/
 ├── .vscode/
