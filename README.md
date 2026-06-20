@@ -5,9 +5,6 @@ Personal portfolio website with a space-themed 3D background, interactive hero s
 **Live preview:** Open `index.html` through a local web server (required for ES modules and assets).
 
 ## Features
-
-
-
 - **3D space background** — Galaxy, star field, and animated planets (Earth, Moon, Mars, Jupiter, Saturn, and more) using Three.js
 - **Earth loading screen** — Rotating Earth with clouds and atmosphere while the page loads
 - **Scroll-based 3D effects** — Section depth, card reveals, and hero image tilt (`scene-3d.js`)
