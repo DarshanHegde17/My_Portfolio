@@ -12,11 +12,6 @@ Personal portfolio website with a space-themed 3D background, interactive hero s
 - **Typed headline** — Rotating roles in the hero via Typed.js
 - **Sections** — Home, About, Skills, Education, Work, Certificates, Experience timeline, and footer with contact links
 - **Responsive layout** — Mobile navigation, smooth scrolling, scroll spy, and ScrollReveal animations
-
-
-
-
-
 ## Project structure
 
 ```text
