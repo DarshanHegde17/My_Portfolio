@@ -1,5 +1,6 @@
 # Darshan Hegde — Portfolio
 
+
 Personal portfolio website with a space-themed 3D background, interactive hero section, and scroll-driven animations.
 
 **Live preview:** Open `index.html` through a local web server (required for ES modules and assets).
