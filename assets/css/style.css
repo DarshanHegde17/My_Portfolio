@@ -52,9 +52,6 @@ body {
   z-index: -1;
   pointer-events: none;
 }
-  font-family: "Poppins", sans-serif;
-  position: relative;
-}
 
 /* Galaxy Canvas Background */
 #galaxyCanvas {
@@ -1496,41 +1493,7 @@ form .button-area {
     margin-right: 0.5rem;
 }
 
-/* ===== 3D SCROLLING EFFECTS ===== */
-html {
-    scroll-behavior: smooth;
-    perspective: 1px;
-}
-
-/* 3D Parallax Sections */
-.parallax-section {
-    transform-style: preserve-3d;
-    position: relative;
-}
-
-.parallax-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-.parallax-layer-back {
-    transform: translateZ(-1px) scale(2);
-}
-
-.parallax-layer-base {
-    transform: translateZ(0);
-}
-
-.parallax-layer-front {
-    transform: translateZ(1px);
-}
-
-/* 3D Card Transform on Scroll
-
-
+/* ===== 3D SCROLLING & SECTION STYLES ===== */
 /* Fix About Section Image */
 .about .image img {
     width: 100%;
@@ -1706,4 +1669,14 @@ html {
   font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
   font-style: normal;
+}
+
+/* Custom Cosmic Cursor Styling for the entire web page */
+@media (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active *,
+  body.custom-cursor-active,
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
 }
