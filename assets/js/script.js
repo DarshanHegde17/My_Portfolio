@@ -11,32 +11,6 @@ $(document).ready(function () {
         $navbar.toggleClass('nav-toggle');
     });
 
-    // Theme toggle handling (Light / Dark mode)
-    const $themeToggle = $('#theme-toggle');
-    const $themeIcon = $themeToggle.find('i');
-
-    function applyTheme(theme) {
-        if (theme === 'light') {
-            $('body').addClass('light-theme');
-            $themeIcon.removeClass('fa-moon').addClass('fa-sun');
-            localStorage.setItem('portfolio-theme', 'light');
-        } else {
-            $('body').removeClass('light-theme');
-            $themeIcon.removeClass('fa-sun').addClass('fa-moon');
-            localStorage.setItem('portfolio-theme', 'dark');
-        }
-    }
-
-    const savedTheme = localStorage.getItem('portfolio-theme');
-    if (savedTheme === 'light') {
-        applyTheme('light');
-    }
-
-    $themeToggle.on('click', function () {
-        const isLight = $('body').hasClass('light-theme');
-        applyTheme(isLight ? 'dark' : 'light');
-    });
-
     // Cache section geometries to avoid synchronous layout thrashing during scroll
     let sectionPositions = [];
     function calculateSectionPositions() {
