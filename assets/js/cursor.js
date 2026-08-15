@@ -84,7 +84,7 @@
   });
 
   // Comprehensive interactive selectors across all portfolio sections
-  const interactiveSelectors = 'a, button, input, textarea, select, label, [role="button"], .btn, .box, .bar, .tilt, .social-icons li, #menu, #scroll-top, .logo, .card, .timeline .container, .timeline .content, .footer .box a, .share a, .resumebtn .btn, [data-tilt], img';
+  const interactiveSelectors = 'a, button, input, textarea, select, label, [role="button"], .btn, .box, .bar, .tilt, .social-icons li, #menu, #scroll-top, .logo, .card, .timeline .container, .timeline .content, .footer .box a, .share a, .resumebtn .btn, [data-tilt], img, .project-scroll-card';
   
   document.addEventListener('mouseover', (e) => {
     if (e.target && e.target.closest && e.target.closest(interactiveSelectors)) {

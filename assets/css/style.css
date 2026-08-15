@@ -884,6 +884,7 @@ header .navbar ul li a:hover {
 .work .viewall {
   display: flex;
   justify-content: center;
+  margin-top: 3rem;
 }
 .work .viewall .btn {
   position: relative;
@@ -893,26 +894,232 @@ header .navbar ul li a:hover {
   transition: 0.5s;
   color: rgb(255, 255, 255);
   font-weight: 700;
-  border: 2px solid #fff;
-  box-shadow: 0px 5px 10px rgba(65, 84, 241, 0.4);
+  border: 2px solid #ff8c00;
+  box-shadow: 0px 5px 15px rgba(255, 140, 0, 0.4);
   text-align: center;
+  background: transparent;
 }
 .work .viewall .btn span {
   font-weight: 600;
   font-size: 1.7rem;
   font-family: "Nunito", sans-serif;
+  color: #fff;
 }
 .work .viewall .btn i {
-  margin-left: 0.3rem;
+  margin-left: 0.8rem;
   font-size: 1.5rem;
   transition: 0.3s;
+  color: #ff8c00;
 }
 .work .viewall .btn:hover {
-  background: #fff;
+  background: #ff8c00;
+  color: #000;
+  box-shadow: 0px 8px 25px rgba(255, 140, 0, 0.7);
+}
+.work .viewall .btn:hover span {
   color: #000;
 }
 .work .viewall .btn:hover i {
+  color: #000;
   transform: translateX(5px);
+}
+
+/* Projects Auto-Scrolling Showcase (Right to Left) */
+.projects-marquee-header {
+  text-align: center;
+  margin: 4.5rem 0 1.5rem;
+}
+.projects-marquee-header h3 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+}
+.projects-marquee-header h3 span {
+  color: var(--main-color);
+}
+.projects-marquee-header h3 i {
+  color: var(--main-color);
+  margin-right: 0.8rem;
+}
+.projects-marquee-header p {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-family: "Nunito", sans-serif;
+}
+
+.projects-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 2.5rem 0;
+  margin: 1rem 0 2rem;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.projects-scroll-track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  animation: scrollProjectsLeft 30s linear infinite;
+  will-change: transform;
+}
+
+/* Stop/Pause scrolling when cursor is in any project box or anywhere on the track */
+.projects-scroll-wrapper:hover .projects-scroll-track,
+.projects-scroll-track:hover,
+.projects-scroll-track .project-scroll-card:hover {
+  animation-play-state: paused !important;
+}
+
+@keyframes scrollProjectsLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 1.25rem));
+  }
+}
+
+.projects-scroll-track .project-scroll-card {
+  flex: 0 0 34rem;
+  width: 34rem;
+  height: 29rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 140, 0, 0.4);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 140, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  background: rgba(15, 15, 15, 0.95);
+  cursor: pointer;
+}
+
+.projects-scroll-track .project-scroll-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #ff8c00;
+  box-shadow: 0 1.2rem 3rem rgba(255, 140, 0, 0.55), 0 0 25px rgba(255, 140, 0, 0.4);
+}
+
+.projects-scroll-track .project-scroll-card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.4s ease;
+}
+
+.projects-scroll-track .project-scroll-card:hover img {
+  transform: scale(1.06);
+}
+
+.projects-scroll-track .project-scroll-card .content {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 72%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.94);
+  display: flex;
+  flex-direction: column;
+  transition: top 0.35s ease;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.projects-scroll-track .project-scroll-card:hover .content {
+  top: 22%;
+}
+
+.projects-scroll-track .project-scroll-card .content .tag,
+.projects-scroll-track .project-scroll-card .content .desc,
+.projects-scroll-track .project-scroll-card .content .desc .btns,
+.projects-scroll-track .project-scroll-card .content .desc .btns a {
+  pointer-events: auto;
+}
+
+.projects-scroll-track .project-scroll-card .content .tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4.5rem;
+  width: 100%;
+  padding: 0 1.2rem;
+  background: #ff8c00;
+  color: #000;
+}
+
+.projects-scroll-track .project-scroll-card .content .tag h3 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.projects-scroll-track .project-scroll-card .desc {
+  margin: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.projects-scroll-track .project-scroll-card .desc p {
+  font-size: 1.35rem;
+  color: var(--text-color);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.projects-scroll-track .project-scroll-card .desc .btns {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 1.2rem;
+}
+
+.projects-scroll-track .project-scroll-card .desc .btns .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1rem 1.8rem;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  color: #000;
+  background: #ff8c00;
+  cursor: pointer;
+  z-index: 200;
+  position: relative;
+  pointer-events: auto;
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.25s;
+}
+
+.projects-scroll-track .project-scroll-card .desc .btns .btn:hover {
+  background: #ffa500;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 140, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+  .projects-scroll-track .project-scroll-card {
+    flex: 0 0 28rem;
+    width: 28rem;
+    height: 25rem;
+  }
+  .projects-scroll-track .project-scroll-card .content .tag h3 {
+    font-size: 1.5rem;
+  }
+  .projects-scroll-track .project-scroll-card .desc p {
+    font-size: 1.2rem;
+  }
 }
 /* work section ends */
 
