@@ -40,7 +40,12 @@ document.body.scrollTop = 0;
 <header>
         <a href="/" class="logo"><i class="fa-solid fa-code"></i> Darshan Hegde</a>
 
-        <div id="menu" class="fas fa-bars"></div>
+        <div class="nav-controls">
+            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle light and dark theme" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <div id="menu" class="fas fa-bars"></div>
+        </div>
         <nav class="navbar">
             <ul>
             <li><a class="active" href="#home">Home</a></li>
@@ -104,7 +109,7 @@ document.body.scrollTop = 0;
         
         <div class="box-container">
             <div class="box">
-              <p><span> age: </span> 21</p>
+              <p><span> age: </span> 22</p>
               <p><span> phone : </span> +91 8660333493</p>
             </div>
             <div class="box">
@@ -1014,17 +1019,17 @@ if (loaderCanvas) {
   animateLoader();
 }
 
-// Snappy Loading Progress
+// 6-Second Loading Progress
 const percentageElement = document.querySelector('.loading-percentage');
 let progress = 0;
 const progressInterval = setInterval(() => {
-  progress += 5;
+  progress += 1;
   if (progress <= 100 && percentageElement) {
     percentageElement.textContent = Math.floor(progress) + '%';
   }
-}, 50);
+}, 58);
 
-// Hide and clean up Loader cleanly
+// Hide and clean up Loader after 6 seconds
 setTimeout(() => {
   clearInterval(progressInterval);
   if (percentageElement) percentageElement.textContent = '100%';
@@ -1046,7 +1051,7 @@ setTimeout(() => {
     if (loaderContainer) loaderContainer.style.display = 'none';
     if (loadingBarContainer) loadingBarContainer.style.display = 'none';
   }, 400);
-}, 1200);
+}, 6000);
 </script>
 
 <!-- Realistic Galaxy 3D Background Script -->
