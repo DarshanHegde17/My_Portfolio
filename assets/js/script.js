@@ -1,47 +1,100 @@
 $(document).ready(function () {
 
-    $('#menu').click(function () {
+    const $menu = $('#menu');
+    const $navbar = $('.navbar');
+    const $scrollTop = $('#scroll-top');
+    const $navLinks = $('.navbar ul li a');
+    const $sections = $('section');
+
+    $menu.on('click', function () {
         $(this).toggleClass('fa-times');
-        $('.navbar').toggleClass('nav-toggle');
+        $navbar.toggleClass('nav-toggle');
     });
 
-    $(window).on('scroll load', function () {
-        $('#menu').removeClass('fa-times');
-        $('.navbar').removeClass('nav-toggle');
+    // Cache section geometries to avoid synchronous layout thrashing during scroll
+    let sectionPositions = [];
+    function calculateSectionPositions() {
+        sectionPositions = [];
+        $sections.each(function () {
+            const $sec = $(this);
+            const id = $sec.attr('id');
+            if (id) {
+                const top = $sec.offset().top;
+                const height = $sec.outerHeight();
+                sectionPositions.push({ id, top, height });
+            }
+        });
+    }
 
-        if (window.scrollY > 60) {
-            document.querySelector('#scroll-top').classList.add('active');
+    calculateSectionPositions();
+    $(window).on('resize', calculateSectionPositions);
+
+    // High performance scroll handler with requestAnimationFrame
+    let isScrolling = false;
+    function handleScroll() {
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        // Toggle back to top button
+        if (scrollY > 100) {
+            $scrollTop.addClass('active');
         } else {
-            document.querySelector('#scroll-top').classList.remove('active');
+            $scrollTop.removeClass('active');
         }
 
-        // scroll spy
-        $('section').each(function () {
-            let height = $(this).height();
-            let offset = $(this).offset().top - 200;
-            let top = $(window).scrollTop();
-            let id = $(this).attr('id');
+        // Close mobile menu if open during scroll
+        if ($navbar.hasClass('nav-toggle')) {
+            $menu.removeClass('fa-times');
+            $navbar.removeClass('nav-toggle');
+        }
 
-            if (top > offset && top < offset + height) {
-                $('.navbar ul li a').removeClass('active');
-                $('.navbar').find(`[href="#${id}"]`).addClass('active');
+        // Fast scroll spy using precomputed positions
+        const checkPoint = scrollY + 220;
+        let currentId = '';
+        for (let i = 0; i < sectionPositions.length; i++) {
+            const sec = sectionPositions[i];
+            if (checkPoint >= sec.top && checkPoint < sec.top + sec.height) {
+                currentId = sec.id;
+                break;
             }
+        }
+
+        if (currentId) {
+            $navLinks.removeClass('active');
+            $navbar.find(`[href="#${currentId}"]`).addClass('active');
+        }
+
+        isScrolling = false;
+    }
+
+    window.addEventListener('scroll', function () {
+        if (!isScrolling) {
+            isScrolling = true;
+            requestAnimationFrame(handleScroll);
+        }
+    }, { passive: true });
+
+    // Initial check on load
+    handleScroll();
+
+    // Smooth anchor navigation using native smooth scroll
+    $('a[href^="#"]').on('click', function (e) {
+        const targetId = $(this).attr('href');
+        if (!targetId || targetId === '#' || targetId.length < 2) return;
+        const $target = $(targetId);
+        if (!$target.length) return;
+
+        e.preventDefault();
+        $menu.removeClass('fa-times');
+        $navbar.removeClass('nav-toggle');
+
+        const offsetTop = $target.offset().top - 60;
+        window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
         });
     });
 
-    // smooth scrolling (only same-page anchor links)
-    $('a[href^="#"]').on('click', function (e) {
-        const target = $(this).attr('href');
-        if (!target || target === '#' || target.length < 2) return;
-        const section = $(target);
-        if (!section.length) return;
-        e.preventDefault();
-        $('html, body').animate({
-            scrollTop: section.offset().top,
-        }, 500, 'linear');
-    });
-
-    // <!-- emailjs to mail contact form data -->
+    // EmailJS to mail contact form data
     $("#contact-form").submit(function (event) {
         emailjs.init("user_TTDmetQLYgWCLzHTDgqxm");
 
@@ -56,24 +109,21 @@ $(document).ready(function () {
             });
         event.preventDefault();
     });
-    // <!-- emailjs to mail contact form data -->
 
 });
 
-document.addEventListener('visibilitychange',
-    function () {
-        if (document.visibilityState === "visible") {
-            document.title = "Portfolio | CodeWithTanveer";
-            $("#favicon").attr("href", "assets/images/favicon.jpg");
-        }
-        else {
-            document.title = "Portfolio | Tanveer Ahmad";
-            $("#favicon").attr("href", "assets/images/favicon.jpg");
-        }
-    });
+// Maintain Darshan Hegde title on visibility change
+document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === "visible") {
+        document.title = "Portfolio | Darshan Hegde";
+        $("#favicon").attr("href", "assets/images/favicon.jpg");
+    } else {
+        document.title = "Come Back | Darshan Hegde";
+        $("#favicon").attr("href", "assets/images/favicon.jpg");
+    }
+});
 
-
-// <!-- typed js effect starts -->
+// Typed.js effect
 var typed = new Typed(".typing-text", {
     strings: ["frontend development", "backend development", "web designing", "android development", "Full Stack Web Development"],
     loop: true,
@@ -81,20 +131,25 @@ var typed = new Typed(".typing-text", {
     backSpeed: 30,
     backDelay: 500,
 });
-// <!-- typed js effect ends -->
 
 async function fetchData(type = "skills") {
-    let response
-    type === "skills" ?
-        response = await fetch("skills.json")
-        :
-        response = await fetch("./projects/projects.json")
-    const data = await response.json();
-    return data;
+    let response;
+    try {
+        type === "skills" ?
+            response = await fetch("skills.json")
+            :
+            response = await fetch("./projects/projects.json");
+        const data = await response.json();
+        return data;
+    } catch (e) {
+        return null;
+    }
 }
 
 function showSkills(skills) {
+    if (!skills || !skills.length) return;
     let skillsContainer = document.getElementById("skillsContainer");
+    if (!skillsContainer) return;
     let skillHTML = "";
     skills.forEach(skill => {
         skillHTML += `
@@ -103,37 +158,27 @@ function showSkills(skills) {
                 <img src=${skill.icon} alt="skill" />
                 <span>${skill.name}</span>
               </div>
-            </div>`
+            </div>`;
     });
     skillsContainer.innerHTML = skillHTML;
 }
 
-// Projects are defined in index.html — do not overwrite from JSON
-
 fetchData().then(data => {
-    showSkills(data);
+    if (data) showSkills(data);
 }).catch(() => {
     // skills.json optional; static skills in index.html are used
 });
 
-// <!-- tilt js effect starts (hero/about only — keeps project GitHub links clickable) -->
-VanillaTilt.init(document.querySelectorAll(".home .tilt, .about .tilt"), {
-    max: 15,
-});
-// <!-- tilt js effect ends -->
+// Tilt js effect for hero/about
+if (typeof VanillaTilt !== 'undefined') {
+    VanillaTilt.init(document.querySelectorAll(".home .tilt, .about .tilt"), {
+        max: 12,
+        speed: 400,
+        glare: false
+    });
+}
 
-
-// pre loader start
-// function loader() {
-//     document.querySelector('.loader-container').classList.add('fade-out');
-// }
-// function fadeOut() {
-//     setInterval(loader, 500);
-// }
-// window.onload = fadeOut;
-// pre loader end
-
-// disable developer mode
+// Disable developer keyboard shortcuts
 document.onkeydown = function (e) {
     if (e.keyCode == 123) {
         return false;
@@ -150,65 +195,50 @@ document.onkeydown = function (e) {
     if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
         return false;
     }
+};
+
+/* ===== SCROLL REVEAL ANIMATION (Smooth & Non-jittery) ===== */
+if (typeof ScrollReveal !== 'undefined') {
+    const srtop = ScrollReveal({
+        origin: 'top',
+        distance: '50px',
+        duration: 800,
+        easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
+        reset: false
+    });
+
+    /* SCROLL HOME */
+    srtop.reveal('.home .content h3', { delay: 150 });
+    srtop.reveal('.home .content p', { delay: 150 });
+    srtop.reveal('.home .content .btn', { delay: 150 });
+    srtop.reveal('.home .image', { delay: 250 });
+    srtop.reveal('.home .social-icons li', { interval: 150 });
+
+    /* SCROLL ABOUT */
+    srtop.reveal('.about .content h3', { delay: 150 });
+    srtop.reveal('.about .content .tag', { delay: 150 });
+    srtop.reveal('.about .content p', { delay: 150 });
+    srtop.reveal('.about .content .box-container', { delay: 150 });
+    srtop.reveal('.about .content .resumebtn', { delay: 150 });
+
+    /* SCROLL SKILLS */
+    srtop.reveal('.skills .container', { interval: 150 });
+    srtop.reveal('.skills .container .bar', { delay: 200, interval: 50 });
+
+    /* SCROLL EDUCATION */
+    srtop.reveal('.education .box', { interval: 150 });
+
+    /* SCROLL PROJECTS */
+    srtop.reveal('.work .heading', { delay: 150 });
+    srtop.reveal('.projects-scroll-wrapper', { delay: 200 });
+
+    /* SCROLL CERTIFICATES */
+    srtop.reveal('.certificates .box', { interval: 150 });
+
+    /* SCROLL EXPERIENCE */
+    srtop.reveal('.experience .timeline', { delay: 200 });
+    srtop.reveal('.experience .timeline .container', { interval: 200 });
+
+    /* SCROLL CONTACT */
+    srtop.reveal('.contact .container', { delay: 200 });
 }
-
-// // Start of Tawk.to Live Chat
-// var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-// (function () {
-//     var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-//     s1.async = true;
-//     s1.src = 'https://embed.tawk.to/60df10bf7f4b000ac03ab6a8/1f9jlirg6';
-//     s1.charset = 'UTF-8';
-//     s1.setAttribute('crossorigin', '*');
-//     s0.parentNode.insertBefore(s1, s0);
-// })();
-// // End of Tawk.to Live Chat
-
-
-/* ===== SCROLL REVEAL ANIMATION ===== */
-const srtop = ScrollReveal({
-    origin: 'top',
-    distance: '80px',
-    duration: 1000,
-    reset: true
-});
-
-/* SCROLL HOME */
-srtop.reveal('.home .content h3', { delay: 200 });
-srtop.reveal('.home .content p', { delay: 200 });
-srtop.reveal('.home .content .btn', { delay: 200 });
-
-srtop.reveal('.home .image', { delay: 400 });
-srtop.reveal('.home .github', { interval: 600 });
-srtop.reveal('.home .linkedin', { interval: 800 });
-srtop.reveal('.home .leetcode', { interval: 1000 });
-srtop.reveal('.home .hackerrank', { interval: 1200 });
-
-/* SCROLL ABOUT */
-srtop.reveal('.about .content h3', { delay: 200 });
-srtop.reveal('.about .content .tag', { delay: 200 });
-srtop.reveal('.about .content p', { delay: 200 });
-srtop.reveal('.about .content .box-container', { delay: 200 });
-srtop.reveal('.about .content .resumebtn', { delay: 200 });
-
-
-/* SCROLL SKILLS */
-srtop.reveal('.skills .container', { interval: 200 });
-srtop.reveal('.skills .container .bar', { delay: 400 });
-
-/* SCROLL EDUCATION */
-srtop.reveal('.education .box', { interval: 200 });
-
-/* SCROLL PROJECTS */
-srtop.reveal('.work .box', { interval: 200 });
-
-/* SCROLL CERTIFICATES */
-srtop.reveal('.certificates .box', { interval: 200 });
-
-/* SCROLL EXPERIENCE */
-srtop.reveal('.experience .timeline', { delay: 400 });
-srtop.reveal('.experience .timeline .container', { interval: 400 });
-
-/* SCROLL CONTACT */
-srtop.reveal('.contact .container', { delay: 400 });
-srtop.reveal('.contact .container .form-group', { delay: 400 });
