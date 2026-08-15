@@ -169,9 +169,9 @@ fetchData().then(data => {
     // skills.json optional; static skills in index.html are used
 });
 
-// Tilt js effect for hero/about
+// Tilt js effect for hero/about/projects/certificates
 if (typeof VanillaTilt !== 'undefined') {
-    VanillaTilt.init(document.querySelectorAll(".home .tilt, .about .tilt"), {
+    VanillaTilt.init(document.querySelectorAll(".tilt, .work .box, .certificates .box, .home .tilt, .about .tilt"), {
         max: 12,
         speed: 400,
         glare: false
@@ -230,6 +230,7 @@ if (typeof ScrollReveal !== 'undefined') {
 
     /* SCROLL PROJECTS */
     srtop.reveal('.work .heading', { delay: 150 });
+    srtop.reveal('.work .box', { interval: 150 });
     srtop.reveal('.projects-scroll-wrapper', { delay: 200 });
 
     /* SCROLL CERTIFICATES */
