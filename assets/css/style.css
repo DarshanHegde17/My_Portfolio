@@ -797,9 +797,16 @@ header .navbar ul li a:hover {
 }
 .work .box-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 3rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3.5rem;
+  margin: 2.5rem auto;
+  max-width: 1280px;
+}
+@media (max-width: 900px) {
+  .work .box-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
 }
 .work .box-container .box {
   background: var(--bg-secondary);
@@ -809,94 +816,31 @@ header .navbar ul li a:hover {
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
   cursor: pointer;
   position: relative;
-  height: 32rem;
-  box-shadow: 0 0 1.2rem rgba(255, 140, 0, 0.3);
+  height: 38rem;
+  box-shadow: 0 0 1.5rem rgba(255, 140, 0, 0.35);
 }
 .work .box-container .box:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 2rem var(--main-color), 0 0 4rem rgba(255, 140, 0, 0.45);
+  transform: translateY(-12px);
+  box-shadow: 0 0 2.5rem var(--main-color), 0 0 4.5rem rgba(255, 140, 0, 0.5);
 }
 .work .box-container .box img,
-.work .box-container .box video,
-.work .box-container .box .project-media-banner {
-  height: 250px;
+.work .box-container .box video {
+  height: 310px;
   width: 100%;
   object-fit: cover;
   display: block;
   pointer-events: none;
   background: #0d0e15;
 }
-.work .box-container .box .project-media-banner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: radial-gradient(circle at 50% 30%, #1e1b4b 0%, #09090b 100%);
-  overflow: hidden;
-  border-bottom: 1px solid rgba(99, 102, 241, 0.3);
-}
-.work .box-container .box .project-media-banner .banner-glow {
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, transparent 70%);
-  border-radius: 50%;
-  filter: blur(20px);
-  animation: pulseGlow 3s ease-in-out infinite alternate;
-}
-.work .box-container .box .project-media-banner .banner-icon {
-  width: 58px;
-  height: 58px;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.6rem;
-  font-weight: 800;
-  color: #fff;
-  z-index: 2;
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.work .box-container .box .project-media-banner .banner-title {
-  margin-top: 1rem;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #f1f5f9;
-  letter-spacing: 0.5px;
-  z-index: 2;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-}
-.work .box-container .box .project-media-banner .banner-tags {
-  margin-top: 0.5rem;
-  display: flex;
-  gap: 0.6rem;
-  z-index: 2;
-}
-.work .box-container .box .project-media-banner .banner-tags span {
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 0.2rem 0.8rem;
-  border-radius: 20px;
-  background: rgba(99, 102, 241, 0.2);
-  color: #c7d2fe;
-  border: 1px solid rgba(99, 102, 241, 0.35);
-}
-@keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.6; }
-  100% { transform: scale(1.2); opacity: 1; }
-}
 .work .box-container .box .content {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.98), rgba(26, 26, 26, 0.95));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 75%, rgba(20, 20, 20, 0.92));
   border-top: 2px solid var(--main-color);
-  padding: 2rem;
-  transform: translateY(calc(100% - 6rem));
+  padding: 2.2rem 2.4rem;
+  transform: translateY(calc(100% - 6.5rem));
   transition: transform 0.4s ease;
   pointer-events: none;
   display: flex;
@@ -909,7 +853,7 @@ header .navbar ul li a:hover {
   pointer-events: auto;
 }
 .work .box-container .box .content .tag h3 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: #fff;
   margin-bottom: 1rem;
   line-height: 1.2;
@@ -928,16 +872,16 @@ header .navbar ul li a:hover {
   opacity: 1;
 }
 .work .desc p {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   color: var(--text-color);
-  line-height: 1.5;
-  margin-bottom: 1.2rem;
+  line-height: 1.55;
+  margin-bottom: 1.3rem;
 }
 .work .desc .btns {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
+  gap: 1.2rem;
   justify-content: flex-start;
   width: 100%;
   margin-top: 0.8rem;
