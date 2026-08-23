@@ -201,45 +201,35 @@ document.onkeydown = function (e) {
 if (typeof ScrollReveal !== 'undefined') {
     const srtop = ScrollReveal({
         origin: 'top',
-        distance: '50px',
+        distance: '40px',
         duration: 800,
         easing: 'cubic-bezier(0.25, 0.8, 0.25, 1)',
         reset: false
     });
 
-    /* SCROLL HOME */
-    srtop.reveal('.home .content h3', { delay: 150 });
-    srtop.reveal('.home .content p', { delay: 150 });
-    srtop.reveal('.home .content .btn', { delay: 150 });
-    srtop.reveal('.home .image', { delay: 250 });
-    srtop.reveal('.home .social-icons li', { interval: 150 });
-
     /* SCROLL ABOUT */
-    srtop.reveal('.about .content h3', { delay: 150 });
-    srtop.reveal('.about .content .tag', { delay: 150 });
-    srtop.reveal('.about .content p', { delay: 150 });
-    srtop.reveal('.about .content .box-container', { delay: 150 });
-    srtop.reveal('.about .content .resumebtn', { delay: 150 });
+    srtop.reveal('.about .content h3', { delay: 100 });
+    srtop.reveal('.about .content .tag', { delay: 100 });
+    srtop.reveal('.about .content p', { delay: 100 });
+    srtop.reveal('.about .content .box-container', { delay: 100 });
+    srtop.reveal('.about .content .resumebtn', { delay: 100 });
 
     /* SCROLL SKILLS */
-    srtop.reveal('.skills .container', { interval: 150 });
-    srtop.reveal('.skills .container .bar', { delay: 200, interval: 50 });
+    srtop.reveal('.skills .container', { interval: 100 });
+    srtop.reveal('.skills .container .bar', { delay: 150, interval: 40 });
 
     /* SCROLL EDUCATION */
-    srtop.reveal('.education .box', { interval: 150 });
+    srtop.reveal('.education .box', { interval: 120 });
 
     /* SCROLL PROJECTS */
-    srtop.reveal('.work .heading', { delay: 150 });
-    srtop.reveal('.work .box', { interval: 150 });
-    srtop.reveal('.projects-scroll-wrapper', { delay: 200 });
+    srtop.reveal('.work .heading', { delay: 100 });
+    srtop.reveal('.work .box', { interval: 120 });
+    srtop.reveal('.projects-scroll-wrapper', { delay: 150 });
 
     /* SCROLL CERTIFICATES */
-    srtop.reveal('.certificates .box', { interval: 150 });
+    srtop.reveal('.certificates .box', { interval: 120 });
 
     /* SCROLL EXPERIENCE */
-    srtop.reveal('.experience .timeline', { delay: 200 });
-    srtop.reveal('.experience .timeline .container', { interval: 200 });
-
-    /* SCROLL CONTACT */
-    srtop.reveal('.contact .container', { delay: 200 });
+    srtop.reveal('.experience .timeline', { delay: 150 });
+    srtop.reveal('.experience .timeline .container', { interval: 150 });
 }

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="Pragati sable, portfolio, Pragati, full stack dev, personal portfolio lifecodes, portfolio design, portfolio website, personal portfolio" />
-    <meta name="description" content="Welcome to Pragati's Portfolio. Full-Stack Web Developer and Android App Developer" />
+    <meta name="keywords" content="Darshan Hegde, portfolio, Darshan Hegde portfolio, full stack dev, personal portfolio, portfolio design, software engineer" />
+    <meta name="description" content="Welcome to Darshan Hegde's Portfolio. Full-Stack Web Developer and Software Engineer" />
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
     <!-- Font Awesome -->
@@ -16,20 +16,81 @@
     <title>Portfolio | Darshan Hegde</title>
 </head>
 <body class="loading">
+
 <!-- Loading Bar at Top -->
 <div class="loading-bar-container">
   <div class="loading-bar"></div>
 </div>
 
-<!-- Realistic Earth Loader -->
+<!-- Realistic Earth Loader (5 Seconds) -->
 <div class="loader-container">
   <canvas id="earthLoader"></canvas>
   <div class="loading-text">Loading Portfolio...</div>
   <div class="loading-percentage">0%</div>
 </div>
 
-<!-- Realistic Space Background Canvas -->
-<canvas id="spaceCanvas"></canvas>
+<!-- Cinematic Video Landing Page Overlay (Optional Replay) -->
+<div id="videoLanding" class="video-landing-page" role="dialog" aria-modal="true" aria-label="Welcome Intro" style="display: none;">
+  <div class="video-wrapper">
+    <video id="landingVideo" src="./assets/images/projects/landing-video.mp4" playsinline muted preload="auto"></video>
+    <div class="video-overlay-gradient"></div>
+    <div class="video-grid-overlay"></div>
+    <div class="video-scanlines"></div>
+  </div>
+
+  <!-- Futuristic Cyber HUD & Controls -->
+  <div class="landing-hud-container">
+    <!-- Top Bar -->
+    <div class="landing-top-bar">
+      <div class="landing-status-badge">
+        <span class="status-pulse-dot"></span>
+        <span class="status-sys-text">SYS.PORTFOLIO // 2026 READY</span>
+      </div>
+      <div class="landing-controls-top">
+        <button type="button" id="soundToggleBtn" class="hud-btn hud-sound-btn" aria-label="Toggle Sound" title="Mute / Unmute Audio">
+          <i class="fas fa-volume-mute" id="soundIcon"></i>
+          <span id="soundLabel">SOUND: MUTED</span>
+        </button>
+        <button type="button" id="skipIntroBtn" class="hud-btn hud-skip-btn" aria-label="Skip Intro" title="Skip to Portfolio">
+          <span>CLOSE INTRO</span>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Center Play/Pause Flash Indicator -->
+    <div class="landing-center-action" id="centerActionHint">
+      <div class="center-icon-wrap" id="centerIconWrap">
+        <i class="fas fa-play" id="centerActionIcon"></i>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="landing-bottom-bar">
+      <!-- Progress Bar -->
+      <div class="landing-progress-container" id="videoProgressContainer" title="Click to seek">
+        <div class="landing-progress-bar" id="timelineBar"></div>
+        <div class="landing-time-display" id="timeDisplay">00:00 / 00:10</div>
+      </div>
+
+      <div class="landing-actions-row">
+        <div class="landing-shortcuts-hint">
+          <span><kbd>SPACE</kbd> / <kbd>CLICK</kbd> PLAY/PAUSE</span>
+          <span class="hint-separator">&bull;</span>
+          <span><kbd>ESC</kbd> / <kbd>ENTER</kbd> CLOSE</span>
+        </div>
+
+        <button type="button" id="enterPortfolioBtn" class="enter-portfolio-cta" title="Explore Portfolio">
+          <span class="cta-glow-bg"></span>
+          <span class="cta-content">
+            <span class="cta-text">ENTER PORTFOLIO</span>
+            <span class="cta-icon-box"><i class="fas fa-arrow-right"></i></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 // Scroll to top immediately on page load
@@ -37,50 +98,164 @@ window.scrollTo(0, 0);
 document.documentElement.scrollTop = 0;
 document.body.scrollTop = 0;
 </script>
-<header>
-        <a href="/" class="logo"><i class="fa-solid fa-code"></i> Darshan Hegde</a>
 
-        <div id="menu" class="fas fa-bars"></div>
-        <nav class="navbar">
-            <ul>
-            <li><a class="active" href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#certificates">Certificates</a></li>
-            <li><a href="#experience">Experience</a></li>
-            
-            </ul>
-        </nav>
+<header>
+    <a href="/" class="logo"><i class="fa-solid fa-code"></i> Darshan Hegde</a>
+
+    <div id="menu" class="fas fa-bars"></div>
+    <nav class="navbar">
+        <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#certificates">Certificates</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="javascript:void(0)" id="replayIntroNav" class="nav-intro-link" title="Replay Cinematic Intro"><i class="fas fa-play-circle"></i> Intro</a></li>
+        </ul>
+    </nav>
 </header>
 <!-- navbar ends -->
 
 
-<!-- hero section starts -->
-<section class="home" id="home">
-    <div id="particles-js"></div>
+<!-- 3D Scroll-Driven Hero Section Starts -->
+<section class="home scroll-3d-hero" id="home">
+  <div class="scroll-3d-sticky">
+    <canvas id="hero3dCanvas" class="hero-3d-canvas"></canvas>
+    <div class="hero-3d-overlay"></div>
 
-    <div class="content">
-    <h2>Hi There,<br/> I'm Darshan Hegde  <span></span></h2>
-    <p>i am into <span class="typing-text"></span></p>
-    <a href="#about" class="btn"><span>About Me</span>
-      <i class="fas fa-arrow-circle-down"></i>
-    </a>
-    <div class="socials">
-        <ul class="social-icons">
-          <li><a class="github" aria-label="GitHub" href="https://github.com/DarshanHegde17" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
-          <li><a class="linkedin" aria-label="LinkedIn" href="https://www.linkedin.com/in/darshan-hegde-4507382b9" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a></li>
-          <li><a class="leetcode" aria-label="LeetCode" href="https://leetcode.com/u/DarshanHegde17/" target="_blank" rel="noopener noreferrer"><svg class="icon-leetcode" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M16.102 17.93l-3.185-3.418-2.791 2.998-1.01-1.087L14.73 12l-4.195-4.48 4.195-4.48 1.01 1.088-2.791 2.998 3.185 3.418 4.195-4.008zm3.792-3.971L12.9 7.728l-1.01-1.088 4.195-4.48 4.195 4.48-1.01 1.088-2.998 2.997 2.997 2.997 1.009-1.087zM5.908 17.93l-3.185-3.418 2.998-2.998-1.01-1.087L9.31 12 5.114 7.52l1.01-1.087 2.998 2.998L12.307 5.99l1.01 1.087-4.195 4.48 4.195 4.48-1.01 1.087-2.998-2.998-2.998 2.998z"/></svg></a></li>
-          <li><a class="hackerrank" aria-label="HackerRank" href="https://www.hackerrank.com/profile/darshanhegdeheg1" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-hackerrank"></i></a></li>
-        </ul>
+    <!-- Progressive Engine Preloader -->
+    <div id="hero3dLoader" class="hero-3d-loader">
+      <div class="loader-inner">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">INITIALIZING 3D EXPEDITION</div>
+        <div class="loader-progress-track">
+          <div id="hero3dLoaderBar" class="loader-progress-bar"></div>
+        </div>
+        <div id="hero3dLoaderPct" class="loader-percent">0%</div>
       </div>
     </div>
-<div class="image">
-    <img draggable="false" class="tilt" src="./assets/images/Darshan1.jpeg" alt="" height="">
-</div>
+
+    <!-- Stage 1: Hero Identity (0% - 22% Scroll) -->
+    <div class="hero-stage hero-stage-1 active" data-stage="1">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="badge-dot"></span> Full-Stack Developer & Software Engineer</div>
+        <h2>Hi There,<br/> I'm <span>Darshan Hegde</span></h2>
+        <p>I am into <span class="typing-text"></span></p>
+        
+        <div class="hero-actions">
+          <a href="#about" class="btn btn-hero-primary">
+            <span>About Me</span>
+            <i class="fas fa-arrow-circle-down"></i>
+          </a>
+          <a href="#work" class="btn btn-hero-secondary">
+            <span>View Projects</span>
+            <i class="fas fa-code"></i>
+          </a>
+        </div>
+
+        <div class="socials">
+          <ul class="social-icons">
+            <li><a class="github" aria-label="GitHub" href="https://github.com/DarshanHegde17" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a></li>
+            <li><a class="linkedin" aria-label="LinkedIn" href="https://www.linkedin.com/in/darshan-hegde-4507382b9" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a></li>
+            <li><a class="leetcode" aria-label="LeetCode" href="https://leetcode.com/u/DarshanHegde17/" target="_blank" rel="noopener noreferrer"><svg class="icon-leetcode" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M16.102 17.93l-3.185-3.418-2.791 2.998-1.01-1.087L14.73 12l-4.195-4.48 4.195-4.48 1.01 1.088-2.791 2.998 3.185 3.418 4.195-4.008zm3.792-3.971L12.9 7.728l-1.01-1.088 4.195-4.48 4.195 4.48-1.01 1.088-2.998 2.997 2.997 2.997 1.009-1.087zM5.908 17.93l-3.185-3.418 2.998-2.998-1.01-1.087L9.31 12 5.114 7.52l1.01-1.087 2.998 2.998L12.307 5.99l1.01 1.087-4.195 4.48 4.195 4.48-1.01 1.087-2.998-2.998-2.998 2.998z"/></svg></a></li>
+            <li><a class="hackerrank" aria-label="HackerRank" href="https://www.hackerrank.com/profile/darshanhegdeheg1" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-hackerrank"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="scroll-down-hint">
+          <div class="mouse-icon"><div class="wheel"></div></div>
+          <span>SCROLL TO EXPLORE 3D EXPEDITION</span>
+        </div>
+      </div>
+
+      <div class="image">
+        <img draggable="false" class="tilt" src="./assets/images/Darshan1.jpeg" alt="Darshan Hegde">
+      </div>
+    </div>
+
+    <!-- Stage 2: Deep Cosmos Journey (24% - 48% Scroll) -->
+    <div class="hero-stage hero-stage-2" data-stage="2">
+      <div class="stage-center-content">
+        <div class="stage-tag"><i class="fas fa-satellite"></i> EXPEDITION PHASE 01</div>
+        <h2 class="stage-title">NAVIGATING THE <span>DIGITAL REALM</span></h2>
+        <p class="stage-desc">Merging robust engineering architecture with seamless interactive digital experiences.</p>
+        
+        <div class="stage-cards-grid">
+          <div class="stage-card">
+            <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+            <h3>Full-Stack Mastery</h3>
+            <p>End-to-end architectures powered by modern frameworks, scalable APIs, and clean data modeling.</p>
+          </div>
+          <div class="stage-card">
+            <div class="card-icon"><i class="fas fa-bolt"></i></div>
+            <h3>Ultra Performance</h3>
+            <p>60fps fluid motion, sub-second responses, and hardware-accelerated interfaces.</p>
+          </div>
+          <div class="stage-card">
+            <div class="card-icon"><i class="fas fa-cubes"></i></div>
+            <h3>Modern UI & 3D</h3>
+            <p>Transforming complex requirements into captivating, intuitive user journeys.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 3: Approaching Earth (52% - 76% Scroll) -->
+    <div class="hero-stage hero-stage-3" data-stage="3">
+      <div class="stage-center-content">
+        <div class="stage-tag"><i class="fas fa-globe-americas"></i> EXPEDITION PHASE 02</div>
+        <h2 class="stage-title">PRECISION <span>& IMPACT</span></h2>
+        <p class="stage-desc">Engineered for real-world reliability, security, and exponential scalability.</p>
+        
+        <div class="stage-metrics-row">
+          <div class="metric-box">
+            <span class="metric-num">100%</span>
+            <span class="metric-lbl">Responsive & Optimized</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-num">10+</span>
+            <span class="metric-lbl">Core Technologies</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-num">24/7</span>
+            <span class="metric-lbl">Commitment to Quality</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 4: Landing & Port Entry (80% - 100% Scroll) -->
+    <div class="hero-stage hero-stage-4" data-stage="4">
+      <div class="stage-center-content">
+        <div class="stage-tag"><i class="fas fa-map-marker-alt"></i> EXPEDITION COMPLETE</div>
+        <h2 class="stage-title">READY TO <span>BUILD TOGETHER</span></h2>
+        <p class="stage-desc">Scroll down to dive into my background, skills, projects, and achievements.</p>
+        
+        <div class="stage-final-actions">
+          <a href="#about" class="btn btn-hero-primary">
+            <span>About Me</span>
+            <i class="fas fa-user-alt"></i>
+          </a>
+          <a href="#skills" class="btn btn-hero-secondary">
+            <span>Skills & Tech</span>
+            <i class="fas fa-laptop-code"></i>
+          </a>
+          <a href="#work" class="btn btn-hero-accent">
+            <span>Featured Work</span>
+            <i class="fas fa-briefcase"></i>
+          </a>
+        </div>
+        <div class="stage-down-arrow">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </section>
-<!-- hero section ends -->
+<!-- 3D Scroll-Driven Hero Section Ends -->
 
 
 <!-- about section starts -->
@@ -90,7 +265,7 @@ document.body.scrollTop = 0;
     <div class="row">
 
     <div class="image">
-        <img draggable="false" class="tilt" src="./assets/images/Passport size pic.jpeg" alt="">
+        <img draggable="false" class="tilt" src="./assets/images/Passport size pic.jpeg" alt="Darshan Hegde">
     </div>
     <div class="content">
         <h3>I'm Darshan Hegde</h3>
@@ -137,19 +312,19 @@ document.body.scrollTop = 0;
 
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/icons8-react-100.png" height="50" width="50">
+                <img src="./assets/images/skills/icons8-react-100.png" height="50" width="50" alt="ReactJS">
                 <span>ReactJS</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/figma.png" height="50" width="50">
+                <img src="./assets/images/skills/figma.png" height="50" width="50" alt="Figma">
                 <span>Figma</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"height="50" width="50" viewBox="0 0 48 48">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="50" width="50" viewBox="0 0 48 48">
                   <linearGradient id="SNASnMitCxQrIYk4GDibta_v8RpPQUwv0N8_gr1" x1="18.208" x2="34.159" y1="2.413" y2="46.236" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f09701"></stop><stop offset="1" stop-color="#e36001"></stop></linearGradient><path fill="url(#SNASnMitCxQrIYk4GDibta_v8RpPQUwv0N8_gr1)" d="M7.192,7.176l2.627,29.77c0.109,1.237,0.97,2.28,2.164,2.621l10.643,3.041	c0.898,0.257,1.849,0.257,2.747,0l10.643-3.041c1.194-0.341,2.055-1.383,2.164-2.621l2.627-29.77C40.911,6.006,39.99,5,38.816,5	H9.184C8.01,5,7.089,6.006,7.192,7.176z"></path><path fill="#f09601" d="M24,8v31.9l9.876-2.822c0.797-0.228,1.371-0.924,1.443-1.749l2.286-26.242	C37.656,8.502,37.196,8,36.609,8H24z"></path><path fill="#fff" d="M24,25v-4h8.6l-0.7,11.5L24,35.1v-4.2l4.1-1.4l0.3-4.5L24,25z M32.9,17l0.3-4H24v4H32.9z"></path><path fill="#d6e0e9" d="M24,30.9v4.2l-7.9-2.6L15.7,27h4l0.2,2.5L24,30.9z M19.1,17H24v-4h-9.1l0.7,12H24v-4h-4.6L19.1,17z"></path><path d="M33.2,13l-0.3,4H24h-4.9l0.3,4H24h8.6l-0.7,11.5L24,35.1l-7.9-2.6L15.7,27h4l0.2,2.5l4.1,1.4l4.1-1.4l0.3-4.5H24h-8.4 l-0.7-12H24H33.2 M34.278,12H33.2H24h-9.1h-1.06l0.062,1.058l0.7,12L14.657,26h-0.032l0.078,1.073l0.4,5.5l0.049,0.668 l0.636,0.209l7.9,2.6L24,36.153l0.313-0.103l7.9-2.6l0.644-0.212l0.041-0.677l0.7-11.5L33.663,20H32.6H24h-3.672l-0.15-2H24h8.9 h0.928l0.069-0.925l0.3-4L34.278,12L34.278,12z M20.623,26H24h3.331l-0.185,2.769L24,29.843l-3.156-1.077l-0.148-1.846L20.623,26 L20.623,26z" opacity=".05"></path><path d="M33.2,13l-0.3,4H24h-4.9l0.3,4H24h8.6l-0.7,11.5L24,35.1l-7.9-2.6L15.7,27h4l0.2,2.5l4.1,1.4l4.1-1.4l0.3-4.5H24h-8.4 l-0.7-12H24H33.2 M33.739,12.5H33.2H24h-9.1h-0.53l0.031,0.529l0.7,12l0.027,0.471H15.6H24h3.866l-0.242,3.634L24,30.372 l-3.628-1.239l-0.174-2.173l-0.037-0.46H19.7h-4h-0.538l0.039,0.536l0.4,5.5l0.024,0.334l0.318,0.105l7.9,2.6L24,35.626 l0.156-0.051l7.9-2.6l0.322-0.106l0.021-0.339l0.7-11.5l0.032-0.53H32.6H24h-4.136l-0.225-3H24h8.9h0.464l0.035-0.463l0.3-4 L33.739,12.5L33.739,12.5z" opacity=".07"></path>
                   </svg>
                 <span>HTML5</span>
@@ -157,79 +332,79 @@ document.body.scrollTop = 0;
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/javascript.png" height="50" width="50">
+                <img src="./assets/images/skills/javascript.png" height="50" width="50" alt="JavaScript">
                 <span>JavaScript</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/java.png" height="50" width="50">
+                <img src="./assets/images/skills/java.png" height="50" width="50" alt="Java">
                 <span>Java</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/bootstrap.png" height="50" width="50">
+                <img src="./assets/images/skills/bootstrap.png" height="50" width="50" alt="Bootstrap">
                 <span>Bootstrap</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/python.png" height="50" width="50">
+                <img src="./assets/images/skills/python.png" height="50" width="50" alt="Python">
                 <span>Python</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/github.png" height="50" width="50">
+                <img src="./assets/images/skills/github.png" height="50" width="50" alt="GitHub">
                 <span>GitHub</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/nodejs.png" height="50" width="50">
+                <img src="./assets/images/skills/nodejs.png" height="50" width="50" alt="NodeJS">
                 <span>NodeJS</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/aws.png" height="50" width="50">
+                <img src="./assets/images/skills/aws.png" height="50" width="50" alt="AWS">
                 <span>AWS</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/sql.png" height="50" width="50">
+                <img src="./assets/images/skills/sql.png" height="50" width="50" alt="SQL">
                 <span>SQL</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/mongodb.png" height="50" width="50">
+                <img src="./assets/images/skills/mongodb.png" height="50" width="50" alt="MongoDB">
                 <span>MongoDB</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/php.png" height="50" width="50">
+                <img src="./assets/images/skills/php.png" height="50" width="50" alt="PHP">
                 <span>PHP</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/C.png" height="50" width="50">
+                <img src="./assets/images/skills/C.png" height="50" width="50" alt="C">
                 <span>C</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/css.png" height="50" width="50">
+                <img src="./assets/images/skills/css.png" height="50" width="50" alt="CSS">
                 <span>CSS</span>
               </div>
             </div>
             <div class="bar">
               <div class="info">
-                <img src="./assets/images/skills/angular.png" height="50" width="50">
+                <img src="./assets/images/skills/angular.png" height="50" width="50" alt="Angular">
                 <span>Angular</span>
               </div>
             </div>
@@ -263,11 +438,11 @@ document.body.scrollTop = 0;
 
     <div class="box">
         <div class="image">
-        <img draggable="false" src="./assets/images/educat/sap.jpg" alt="">
+        <img draggable="false" src="./assets/images/educat/sap.jpg" alt="Sapthagiri NPS University">
         </div>
         <div class="content">
         <h3>Master of Computer Applications (MCA)</h3>
-        <p>SAPTHAGIRI  NPS UNIVERSITY</p>
+        <p>SAPTHAGIRI NPS UNIVERSITY</p>
          <h4>2023 - Present | Currently Pursuing</h4>
           <p>Specializing in Software Development, Data Structures, and Real-World Problem Solving.</p>
         </div>
@@ -275,7 +450,7 @@ document.body.scrollTop = 0;
 
     <div class="box">
       <div class="image">
-      <img draggable="false" src="./assets/images/educat/imj.png" alt="">
+      <img draggable="false" src="./assets/images/educat/imj.png" alt="IMJ Institute">
       </div>
       <div class="content">
      <h3>BACHELOR OF COMPUTER APPLICATIONS (BCA)</h3>
@@ -286,7 +461,7 @@ document.body.scrollTop = 0;
     </div>
     <div class="box">
       <div class="image">
-      <img draggable="false" src="./assets/images/educat/mhn.webp" alt="">
+      <img draggable="false" src="./assets/images/educat/mhn.webp" alt="Govt MHN PU College">
       </div>
       <div class="content">
         <h3>PRE-UNIVERSITY COURSE (PUC)</h3>
@@ -325,13 +500,13 @@ document.body.scrollTop = 0;
 
     <!-- Project 2: 3D Royal Enfield Web -->
     <div class="box tilt">
-      <video autoplay loop muted playsinline src="./assets/images/projects/Black_Himalayan_bike_rotating_se…_202607270949.mp4"></video>
+      <video autoplay loop muted playsinline src="./assets/images/projects/Black_Himalayan_bike_rotating_se._202607270949.mp4"></video>
       <div class="content">
         <div class="tag">
           <h3>3D Royal Enfield Web</h3>
         </div>
         <div class="desc">
-          <p>This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules. Interactive 3D motorcycle showcase with 360&deg; rotation and real-time rendering.</p>
+          <p>Interactive 3D motorcycle showcase with 360&deg; rotation and real-time rendering. Provides a minimal setup to get React working in Vite with HMR and high-performance 3D canvas.</p>
           <div class="btns">
             <a href="https://github.com/DarshanHegde17" class="btn project-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
           </div>
@@ -347,7 +522,7 @@ document.body.scrollTop = 0;
           <h3>Velora &bull; CarePlus AI Care</h3>
         </div>
         <div class="desc">
-          <p>CarePlus Medical &amp; AI Care (ABBS INDEX) — A small web application combining a static frontend (HTML/CSS/JS) with a FastAPI backend.</p>
+          <p>CarePlus Medical &amp; AI Care (ABBS INDEX) — A full-stack web application combining a responsive frontend with a high-performance FastAPI backend.</p>
           <div class="btns">
             <a href="https://github.com/DarshanHegde17" class="btn project-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
           </div>
@@ -363,7 +538,7 @@ document.body.scrollTop = 0;
           <h3>NewsSphere</h3>
         </div>
         <div class="desc">
-          <p>NewsSphere is a modern, full-stack news aggregation platform designed to deliver personalized, real-time news briefings, multi-category updates, and an interactive AI chatbot experience. Heavily inspired by platforms like Dailyhunt, it leverages the <strong>MERN</strong> stack (MongoDB, Express, React, Node.js) along with advanced technologies like WebSockets, caching layers, and cloud integrations.</p>
+          <p>NewsSphere is a modern, full-stack news aggregation platform designed to deliver personalized, real-time news briefings, multi-category updates, and an interactive AI chatbot experience leveraging the <strong>MERN</strong> stack.</p>
           <div class="btns">
             <a href="https://github.com/DarshanHegde17" class="btn project-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
           </div>
@@ -683,10 +858,10 @@ document.body.scrollTop = 0;
     <div class="container right">
       <div class="content">
         <div class="tag">
-          <h2>Wesite Development</h2>
+          <h2>Website Development</h2>
         </div>
         <div class="desc">
-            <p>Backend development is the server-side development of a website or application. It involves working with databases, servers, and application logic to make sure the system works properly behind the scenes.</p>
+            <p>Full-stack and web engineering creating robust, scalable, and responsive digital platforms with intuitive user experiences and high availability.</p>
         </div>
       </div>
     </div>
@@ -697,7 +872,7 @@ document.body.scrollTop = 0;
           <h2>Backend Development</h2>
         </div>
         <div class="desc">
-            <p>Software development is the process of designing, creating, testing, and maintaining different software applications.</p>
+            <p>Backend development is the server-side development of a website or application. It involves working with databases, APIs, and microservices to ensure stability and security.</p>
         </div>
       </div>
     </div>
@@ -708,7 +883,7 @@ document.body.scrollTop = 0;
           <h2>Database Management</h2>
         </div>
         <div class="desc">
-            <p>Database management involves organizing, maintaining, and securing databases to ensure data integrity and availability.</p>
+            <p>Database management involves organizing, maintaining, and securing SQL and NoSQL databases to ensure data integrity, speed, and reliability.</p>
         </div>
       </div>
     </div>
@@ -719,29 +894,26 @@ document.body.scrollTop = 0;
           <h2>UI / Design</h2>
         </div>
         <div class="desc">
-            <p>Design is the process of planning the visual appearance of a website or software. It includes creating layouts, choosing colors, fonts, and making the interface simple and attractive for users.</p>
+            <p>Design is the process of planning the visual appearance and interaction flows. It includes prototyping in Figma, choosing color palettes, and creating modern glassmorphic and 3D interfaces.</p>
         </div>
       </div>
     </div>
 
-  
     <div class="container right">
       <div class="content">
         <div class="tag">
           <h2>Testing & Debugging</h2>
         </div>
         <div class="desc">
-            <p>Testing and debugging is the process of identifying and fixing errors or bugs in software applications to ensure they function correctly and provide a good user experience.</p>
+            <p>Testing and debugging is the process of identifying and resolving bugs, optimizing runtime performance, and ensuring seamless cross-browser compatibility.</p>
         </div>
       </div>
     </div>
 
-    
 </div>
 
 </section>
 <!-- experience section ends -->
-
 
 
 <!-- footer section starts -->
@@ -751,7 +923,7 @@ document.body.scrollTop = 0;
 
       <div class="box">
           <h3>Darshan Hegde's Portfolio</h3>
-          <p>Thank you for visiting my personal portfolio website. Connect with me over socials. <br/> <br/> Keep Rising 🚀. Connect with me over live chat!</p>
+          <p>Thank you for visiting my personal portfolio website. Connect with me over socials. <br/> <br/> Keep Rising 🚀. Let's build something remarkable together!</p>
       </div>
 
       <div class="box">
@@ -763,14 +935,13 @@ document.body.scrollTop = 0;
           <a href="#work"><i class="fas fa-chevron-circle-right"></i> Work</a>
           <a href="#certificates"><i class="fas fa-chevron-circle-right"></i> Certificates</a>
           <a href="#experience"><i class="fas fa-chevron-circle-right"></i> Experience</a>
-          
       </div>
 
       <div class="box">
           <h3>Contact info</h3>
           <p> <i class="fas fa-phone"></i>+91 8660333493</p>
           <p> <i class="fas fa-envelope"></i>darshanhegdehegde@gmail.com</p>
-          <p> <i class="fas fa-map-marked-alt"></i>Bengalore karnataka India -</p>
+          <p> <i class="fas fa-map-marked-alt"></i>Bengaluru, Karnataka, India</p>
           <div class="share">
             <a class="github" aria-label="GitHub" href="https://github.com/DarshanHegde17" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
             <a class="linkedin" aria-label="LinkedIn" href="https://www.linkedin.com/in/darshan-hegde-4507382b9" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
@@ -780,7 +951,7 @@ document.body.scrollTop = 0;
       </div>
   </div>
 
-  <h1 class="credit">Designed & Developed <i class="fa fa-heart pulse"></i> by <a href="https://codewithtanveer.blogspot.com/"> Darshan Hegde </a> | &copy; 2024 All rights reserved.</h1>
+  <h1 class="credit">Designed & Developed <i class="fa fa-heart pulse"></i> by <a href="#home"> Darshan Hegde </a> | &copy; 2026 All rights reserved.</h1>
 
 </section>
 <!-- footer section ends -->
@@ -818,11 +989,218 @@ document.body.scrollTop = 0;
 <script src="./assets/js/script.js"></script>
 <script src="./assets/js/cursor.js"></script>
 
-<!-- Earth Loader Script -->
+<!-- Video Landing Page Controller Script -->
+<script>
+(function() {
+  const landingContainer = document.getElementById("videoLanding");
+  const video = document.getElementById("landingVideo");
+  const soundBtn = document.getElementById("soundToggleBtn");
+  const soundIcon = document.getElementById("soundIcon");
+  const soundLabel = document.getElementById("soundLabel");
+  const skipBtn = document.getElementById("skipIntroBtn");
+  const enterBtn = document.getElementById("enterPortfolioBtn");
+  const timelineBar = document.getElementById("timelineBar");
+  const timeDisplay = document.getElementById("timeDisplay");
+  const progressContainer = document.getElementById("videoProgressContainer");
+  const replayNavBtn = document.getElementById("replayIntroNav");
+  const centerActionHint = document.getElementById("centerActionHint");
+  const centerActionIcon = document.getElementById("centerActionIcon");
+
+  let isExited = false;
+  let centerHintTimeout = null;
+
+  function formatTime(seconds) {
+    if (isNaN(seconds) || seconds < 0) return "00:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return (mins < 10 ? "0" + mins : mins) + ":" + (secs < 10 ? "0" + secs : secs);
+  }
+
+  // Attempt smooth autoplay
+  function startPlayback() {
+    if (!video) return;
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(function(err) {
+        console.log("Autoplay waiting for user interaction:", err);
+      });
+    }
+  }
+
+  // Start video playback when DOM ready if overlay is visible
+  if (landingContainer && landingContainer.style.display !== "none") {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", startPlayback);
+    } else {
+      startPlayback();
+    }
+  }
+
+  // Update progress bar & timecode
+  if (video) {
+    video.addEventListener("timeupdate", function() {
+      if (video.duration && video.duration > 0) {
+        const pct = Math.min(100, Math.max(0, (video.currentTime / video.duration) * 100));
+        if (timelineBar) timelineBar.style.width = pct + "%";
+        if (timeDisplay) {
+          timeDisplay.textContent = formatTime(video.currentTime) + " / " + formatTime(video.duration);
+        }
+      }
+    });
+
+    // Auto transition to portfolio on video completion
+    video.addEventListener("ended", function() {
+      exitLandingPage();
+    });
+  }
+
+  // Seek video on timeline click
+  if (progressContainer && video) {
+    progressContainer.addEventListener("click", function(e) {
+      e.stopPropagation();
+      const rect = progressContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+      if (video.duration) {
+        video.currentTime = ratio * video.duration;
+      }
+    });
+  }
+
+  function showCenterFlash(isPlay) {
+    if (!centerActionHint || !centerActionIcon) return;
+    centerActionIcon.className = isPlay ? "fas fa-play" : "fas fa-pause";
+    centerActionHint.classList.add("flash");
+    if (centerHintTimeout) clearTimeout(centerHintTimeout);
+    centerHintTimeout = setTimeout(function() {
+      centerActionHint.classList.remove("flash");
+    }, 450);
+  }
+
+  function togglePlayPause() {
+    if (isExited || !video) return;
+    if (video.paused) {
+      video.play();
+      showCenterFlash(true);
+    } else {
+      video.pause();
+      showCenterFlash(false);
+    }
+  }
+
+  // Sound toggle (Mute / Unmute)
+  function toggleSound(e) {
+    if (e) e.stopPropagation();
+    if (!video) return;
+    video.muted = !video.muted;
+    if (video.muted) {
+      if (soundIcon) soundIcon.className = "fas fa-volume-mute";
+      if (soundLabel) soundLabel.textContent = "SOUND: MUTED";
+      if (soundBtn) soundBtn.classList.remove("sound-active");
+    } else {
+      if (soundIcon) soundIcon.className = "fas fa-volume-up";
+      if (soundLabel) soundLabel.textContent = "SOUND: ON";
+      if (soundBtn) soundBtn.classList.add("sound-active");
+      if (video.paused) video.play();
+    }
+  }
+
+  if (soundBtn) soundBtn.addEventListener("click", toggleSound);
+
+  // Transition to main portfolio
+  function exitLandingPage() {
+    if (isExited) return;
+    isExited = true;
+
+    if (landingContainer) {
+      landingContainer.classList.add("fade-out");
+    }
+    document.body.classList.remove("loading");
+    document.body.classList.remove("video-landing-active");
+
+    setTimeout(function() {
+      if (video) {
+        video.pause();
+      }
+      if (landingContainer) {
+        landingContainer.style.display = "none";
+      }
+    }, 750);
+  }
+
+  if (skipBtn) {
+    skipBtn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      exitLandingPage();
+    });
+  }
+
+  if (enterBtn) {
+    enterBtn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      exitLandingPage();
+    });
+  }
+
+  // Click on background video to play/pause
+  if (landingContainer) {
+    landingContainer.addEventListener("click", function(e) {
+      if (e.target.closest("button") || e.target.closest(".landing-progress-container")) return;
+      togglePlayPause();
+    });
+  }
+
+  // Replay Intro function
+  function replayIntro() {
+    isExited = false;
+    if (landingContainer) {
+      landingContainer.style.display = "flex";
+      // Force layout reflow
+      void landingContainer.offsetWidth;
+      landingContainer.classList.remove("fade-out");
+    }
+    document.body.classList.add("video-landing-active");
+    window.scrollTo(0, 0);
+
+    if (video) {
+      video.currentTime = 0;
+      video.play();
+    }
+  }
+
+  if (replayNavBtn) {
+    replayNavBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      replayIntro();
+    });
+  }
+
+  // Keyboard navigation shortcuts
+  window.addEventListener("keydown", function(e) {
+    if (!isExited && landingContainer && landingContainer.style.display !== "none") {
+      if (e.code === "Space") {
+        e.preventDefault();
+        togglePlayPause();
+      } else if (e.code === "Escape" || e.code === "Enter") {
+        e.preventDefault();
+        exitLandingPage();
+      }
+    }
+  });
+
+  // Global helper
+  window.replayLandingVideo = replayIntro;
+})();
+</script>
+
+<!-- 3D Canvas Scroll Animation Engine Script -->
+<script src="./assets/js/scroll-3d.js"></script>
+
+<!-- Earth Loader 3D Animation Script (5 Seconds) -->
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-// Earth Loader Setup
 const loaderCanvas = document.getElementById("earthLoader");
 let loaderAnimId = null;
 let isLoaderActive = true;
@@ -840,140 +1218,113 @@ if (loaderCanvas) {
     powerPreference: "high-performance"
   });
   loaderRenderer.setSize(300, 300);
-  loaderRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  loaderRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   loaderRenderer.setClearColor(0x000000, 1);
-  loaderRenderer.shadowMap.enabled = true;
-  loaderRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  // Realistic Lighting Setup
-  const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+  // Lighting Setup
+  const ambientLight = new THREE.AmbientLight(0x334466, 0.6);
   loaderScene.add(ambientLight);
 
-  const sunLight = new THREE.DirectionalLight(0xffffff, 2.5);
+  const sunLight = new THREE.DirectionalLight(0xffffff, 2.8);
   sunLight.position.set(5, 3, 5);
-  sunLight.castShadow = true;
   loaderScene.add(sunLight);
 
-  const rimLight = new THREE.DirectionalLight(0x4488ff, 0.8);
+  const rimLight = new THREE.DirectionalLight(0x4488ff, 1.2);
   rimLight.position.set(-5, 0, -3);
   loaderScene.add(rimLight);
 
-  const fillLight = new THREE.PointLight(0x88ccff, 0.5, 100);
-  fillLight.position.set(-3, -2, 3);
-  loaderScene.add(fillLight);
+  // Procedural Earth Texture fallback
+  function createProceduralEarthTexture() {
+    const c = document.createElement("canvas");
+    c.width = 1024;
+    c.height = 512;
+    const ctx = c.getContext("2d");
+    
+    // Deep Ocean
+    const oceanGrad = ctx.createLinearGradient(0, 0, 0, 512);
+    oceanGrad.addColorStop(0, "#081b33");
+    oceanGrad.addColorStop(0.5, "#0d2b45");
+    oceanGrad.addColorStop(1, "#051329");
+    ctx.fillStyle = oceanGrad;
+    ctx.fillRect(0, 0, 1024, 512);
 
-  // Load Earth Textures
+    // Continents
+    ctx.fillStyle = "#2d6a4f";
+    const continents = [
+      [220, 150, 140, 90], [280, 290, 90, 140], [530, 140, 110, 80],
+      [550, 260, 120, 130], [700, 140, 220, 120], [800, 320, 100, 70]
+    ];
+    continents.forEach(([x, y, w, h]) => {
+      ctx.beginPath();
+      ctx.ellipse(x, y, w/2, h/2, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Mountainous & desert textures
+    ctx.fillStyle = "#d4a373";
+    [[570, 220, 70, 50], [750, 180, 110, 50]].forEach(([x, y, w, h]) => {
+      ctx.beginPath();
+      ctx.ellipse(x, y, w/2, h/2, 0, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    return new THREE.CanvasTexture(c);
+  }
+
+  // Earth Mesh
+  const earthGeometry = new THREE.SphereGeometry(1, 48, 48);
   const textureLoader = new THREE.TextureLoader();
-  
   const earthTexture = textureLoader.load(
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg"
+    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg",
+    undefined,
+    undefined,
+    () => { earthMaterial.map = createProceduralEarthTexture(); earthMaterial.needsUpdate = true; }
   );
   earthTexture.colorSpace = THREE.SRGBColorSpace;
 
-  const earthNormalMap = textureLoader.load(
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg"
-  );
-
-  const earthSpecularMap = textureLoader.load(
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg"
-  );
-
-  // Create Realistic Earth (Optimized geometry)
-  const earthGeometry = new THREE.SphereGeometry(1, 48, 48);
   const earthMaterial = new THREE.MeshStandardMaterial({
     map: earthTexture,
-    normalMap: earthNormalMap,
-    normalScale: new THREE.Vector2(0.85, 0.85),
-    roughnessMap: earthSpecularMap,
-    roughness: 0.9,
-    metalness: 0.1,
-    emissive: 0x112244,
-    emissiveIntensity: 0.05
+    roughness: 0.85,
+    metalness: 0.05
   });
   const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  earth.castShadow = true;
-  earth.receiveShadow = true;
   loaderScene.add(earth);
 
-  // Realistic Clouds Layer
-  const cloudTexture = textureLoader.load(
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png"
-  );
-  const cloudGeometry = new THREE.SphereGeometry(1.01, 48, 48);
-  const cloudMaterial = new THREE.MeshStandardMaterial({
-    map: cloudTexture,
-    transparent: true,
-    opacity: 0.5,
-    depthWrite: false,
-    roughness: 1.0,
-    metalness: 0.0
-  });
-  const clouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-  loaderScene.add(clouds);
-
-  // Atmosphere Glow (Inner)
-  const atmosphereGeometry = new THREE.SphereGeometry(1.05, 36, 36);
+  // Atmosphere Glow
+  const atmosphereGeometry = new THREE.SphereGeometry(1.04, 36, 36);
   const atmosphereMaterial = new THREE.MeshBasicMaterial({
     color: 0x4488ff,
     transparent: true,
-    opacity: 0.15,
+    opacity: 0.22,
     blending: THREE.AdditiveBlending,
     side: THREE.BackSide
   });
   const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
   loaderScene.add(atmosphere);
 
-  // Outer Atmosphere Glow
-  const outerGlowGeometry = new THREE.SphereGeometry(1.15, 36, 36);
-  const outerGlowMaterial = new THREE.MeshBasicMaterial({
-    color: 0x2266ff,
-    transparent: true,
-    opacity: 0.08,
-    blending: THREE.AdditiveBlending,
-    side: THREE.BackSide
-  });
-  const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
-  loaderScene.add(outerGlow);
-
-  // Stars Background
+  // Stars
   const starsGeometry = new THREE.BufferGeometry();
-  const starsPositions = [];
-  for (let i = 0; i < 600; i++) {
-    const x = (Math.random() - 0.5) * 50;
-    const y = (Math.random() - 0.5) * 50;
-    const z = (Math.random() - 0.5) * 50;
-    starsPositions.push(x, y, z);
+  const starCoords = [];
+  for (let i = 0; i < 400; i++) {
+    starCoords.push((Math.random() - 0.5) * 40, (Math.random() - 0.5) * 40, (Math.random() - 0.5) * 40);
   }
-  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsPositions, 3));
-  const starsMaterial = new THREE.PointsMaterial({
-    color: 0xffffff,
-    size: 0.05,
-    transparent: true,
-    opacity: 0.8
-  });
+  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starCoords, 3));
+  const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.05, transparent: true, opacity: 0.8 });
   const stars = new THREE.Points(starsGeometry, starsMaterial);
   loaderScene.add(stars);
 
-  // Animate Earth with realistic rotation
-  let time = 0;
   function animateLoader() {
     if (!isLoaderActive) return;
     loaderAnimId = requestAnimationFrame(animateLoader);
-    time += 0.01;
-    
-    earth.rotation.y += 0.003;
-    clouds.rotation.y += 0.0045;
-    atmosphere.scale.setScalar(1 + Math.sin(time * 0.5) * 0.02);
-    outerGlow.scale.setScalar(1 + Math.sin(time * 0.3) * 0.03);
-    stars.rotation.y += 0.0001;
-    stars.rotation.x += 0.00005;
-    
+    earth.rotation.y += 0.012;
+    atmosphere.scale.setScalar(1 + Math.sin(Date.now() * 0.003) * 0.015);
+    stars.rotation.y += 0.0003;
     loaderRenderer.render(loaderScene, loaderCamera);
   }
   animateLoader();
 }
 
-// 6-Second Loading Progress
+// 5-Second Progress Counter
 const percentageElement = document.querySelector('.loading-percentage');
 let progress = 0;
 const progressInterval = setInterval(() => {
@@ -981,9 +1332,9 @@ const progressInterval = setInterval(() => {
   if (progress <= 100 && percentageElement) {
     percentageElement.textContent = Math.floor(progress) + '%';
   }
-}, 58);
+}, 48);
 
-// Hide and clean up Loader after 6 seconds
+// Hide and clean up Loader after exactly 5 seconds (5000ms)
 setTimeout(() => {
   clearInterval(progressInterval);
   if (percentageElement) percentageElement.textContent = '100%';
@@ -1004,321 +1355,8 @@ setTimeout(() => {
     }
     if (loaderContainer) loaderContainer.style.display = 'none';
     if (loadingBarContainer) loadingBarContainer.style.display = 'none';
-  }, 400);
-}, 6000);
-</script>
-
-<!-- Realistic Galaxy 3D Background Script -->
-<script type="module">
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-
-const canvas = document.getElementById("spaceCanvas");
-const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x000006, 0.018);
-
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-camera.position.set(0, 0, 12);
-
-const renderer = new THREE.WebGLRenderer({
-  canvas,
-  antialias: true,
-  alpha: true,
-  powerPreference: "high-performance",
-  precision: "mediump"
-});
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.15;
-
-// Realistic lighting
-const sunLight = new THREE.DirectionalLight(0xffffff, 4.5);
-sunLight.position.set(8, 5, 10);
-scene.add(sunLight);
-
-const softLight = new THREE.AmbientLight(0x6677aa, 0.35);
-scene.add(softLight);
-
-const blueFill = new THREE.PointLight(0x3366ff, 3.5, 120);
-blueFill.position.set(-14, 5, 8);
-scene.add(blueFill);
-
-// Texture loader
-const textureLoader = new THREE.TextureLoader();
-textureLoader.crossOrigin = "anonymous";
-
-const textures = {
-  earth: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg",
-  earthClouds: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png",
-  earthNormal: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_normal_2048.jpg",
-  moon: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg",
-  mars: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/mars_1k_color.jpg",
-  jupiter: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/jupiter2_1024.jpg",
-  mercury: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/mercury.jpg",
-  venus: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/venus.jpg",
-  neptune: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/neptune.jpg",
-  uranus: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/uranus.jpg",
-  saturn: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/saturn.jpg",
-  saturnRing: "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/saturnringcolor.jpg"
-};
-
-function loadTexture(url) {
-  const tex = textureLoader.load(url);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  return tex;
-}
-
-// Stars
-const starGeometry = new THREE.BufferGeometry();
-const starCount = 7000;
-const starPositions = new Float32Array(starCount * 3);
-for (let i = 0; i < starCount * 3; i += 3) {
-  starPositions[i] = (Math.random() - 0.5) * 260;
-  starPositions[i + 1] = (Math.random() - 0.5) * 260;
-  starPositions[i + 2] = (Math.random() - 0.5) * 260;
-}
-starGeometry.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
-const starMaterial = new THREE.PointsMaterial({
-  color: 0xffffff,
-  size: 0.11,
-  transparent: true,
-  opacity: 0.9
-});
-const stars = new THREE.Points(starGeometry, starMaterial);
-scene.add(stars);
-
-// Galaxy dust cloud
-const galaxyGeometry = new THREE.BufferGeometry();
-const galaxyCount = 4000;
-const galaxyPositions = new Float32Array(galaxyCount * 3);
-for (let i = 0; i < galaxyCount; i++) {
-  const radius = Math.random() * 55;
-  const angle = radius * 0.35 + Math.random() * Math.PI * 2;
-  const idx = i * 3;
-  galaxyPositions[idx] = Math.cos(angle) * radius;
-  galaxyPositions[idx + 1] = (Math.random() - 0.5) * 6;
-  galaxyPositions[idx + 2] = Math.sin(angle) * radius - 45;
-}
-galaxyGeometry.setAttribute("position", new THREE.BufferAttribute(galaxyPositions, 3));
-const galaxyMaterial = new THREE.PointsMaterial({
-  color: 0x6e7bff,
-  size: 0.16,
-  transparent: true,
-  opacity: 0.5
-});
-const galaxy = new THREE.Points(galaxyGeometry, galaxyMaterial);
-scene.add(galaxy);
-
-// Realistic Sun (Optimized segment count)
-const sunGeometry = new THREE.SphereGeometry(5.5, 48, 48);
-const sunMaterial = new THREE.MeshBasicMaterial({
-  map: loadTexture("https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/sun.jpg")
-});
-const sun = new THREE.Mesh(sunGeometry, sunMaterial);
-sun.position.set(0, 0, -120);
-scene.add(sun);
-
-const sunGlowGeometry = new THREE.SphereGeometry(6.5, 36, 36);
-const sunGlowMaterial = new THREE.MeshBasicMaterial({
-  color: 0xffaa33,
-  transparent: true,
-  opacity: 0.25,
-  blending: THREE.AdditiveBlending
-});
-const sunGlow = new THREE.Mesh(sunGlowGeometry, sunGlowMaterial);
-sunGlow.position.copy(sun.position);
-scene.add(sunGlow);
-
-const sunLightReal = new THREE.PointLight(0xffbb66, 10, 400);
-sunLightReal.position.copy(sun.position);
-scene.add(sunLightReal);
-
-// Planet creator (40x40 segments for crisp detail with ultra-low GPU overhead)
-function createTexturedPlanet(size, texture, x, y, z, normalTexture = null) {
-  const geometry = new THREE.SphereGeometry(size, 40, 40);
-  const material = new THREE.MeshStandardMaterial({
-    map: loadTexture(texture),
-    normalMap: normalTexture ? loadTexture(normalTexture) : null,
-    roughness: 0.85,
-    metalness: 0.02
-  });
-  const planet = new THREE.Mesh(geometry, material);
-  planet.position.set(x, y, z);
-  scene.add(planet);
-  return planet;
-}
-
-const mercury = createTexturedPlanet(0.8, textures.mercury, -4, 1, -6);
-const venus = createTexturedPlanet(1.3, textures.venus, 4, -1, -14);
-const earth = createTexturedPlanet(2.35, textures.earth, -5, 0, -22, textures.earthNormal);
-const moon = createTexturedPlanet(0.75, textures.moon, -8, 2, -28);
-const mars = createTexturedPlanet(1.75, textures.mars, 5, -1, -38);
-const jupiter = createTexturedPlanet(3.2, textures.jupiter, -5, -1, -52);
-const saturn = createTexturedPlanet(2.45, textures.saturn, 4, 1, -70);
-const uranus = createTexturedPlanet(2.1, textures.uranus, -5, 2, -88);
-const neptune = createTexturedPlanet(2.0, textures.neptune, 5, -2, -104);
-
-// Earth clouds layer
-const cloudGeometry = new THREE.SphereGeometry(2.39, 40, 40);
-const cloudMaterial = new THREE.MeshStandardMaterial({
-  map: loadTexture(textures.earthClouds),
-  transparent: true,
-  opacity: 0.45,
-  depthWrite: false
-});
-const earthClouds = new THREE.Mesh(cloudGeometry, cloudMaterial);
-earthClouds.position.copy(earth.position);
-scene.add(earthClouds);
-
-// Saturn ring with texture
-const ringGeometry = new THREE.RingGeometry(3.1, 4.8, 64);
-const ringMaterial = new THREE.MeshBasicMaterial({
-  map: loadTexture(textures.saturnRing),
-  side: THREE.DoubleSide,
-  transparent: true,
-  opacity: 0.9
-});
-const saturnRing = new THREE.Mesh(ringGeometry, ringMaterial);
-saturnRing.position.copy(saturn.position);
-saturnRing.rotation.x = Math.PI / 2.15;
-scene.add(saturnRing);
-
-// Glow creator
-function createGlow(size, color, target, opacity = 0.12) {
-  const geometry = new THREE.SphereGeometry(size, 32, 32);
-  const material = new THREE.MeshBasicMaterial({
-    color,
-    transparent: true,
-    opacity,
-    blending: THREE.AdditiveBlending,
-    depthWrite: false
-  });
-  const glow = new THREE.Mesh(geometry, material);
-  glow.position.copy(target.position);
-  scene.add(glow);
-  return glow;
-}
-
-const earthGlow = createGlow(2.75, 0x2caaff, earth, 0.16);
-const marsGlow = createGlow(2.15, 0xff4b2b, mars, 0.11);
-const saturnGlow = createGlow(3.0, 0xffc46b, saturn, 0.1);
-const jupiterGlow = createGlow(3.75, 0xffd1a0, jupiter, 0.08);
-
-// Meteors
-const meteors = [];
-function createMeteor() {
-  const geometry = new THREE.ConeGeometry(0.08, 1.8, 12);
-  const material = new THREE.MeshBasicMaterial({
-    color: 0xffffff,
-    transparent: true,
-    opacity: 0.85
-  });
-  const meteor = new THREE.Mesh(geometry, material);
-  meteor.position.set(
-    Math.random() * 50 - 25,
-    Math.random() * 30 + 8,
-    Math.random() * -90
-  );
-  meteor.rotation.z = Math.PI / 4;
-  scene.add(meteor);
-  meteors.push(meteor);
-}
-for (let i = 0; i < 16; i++) createMeteor();
-
-let scrollY = window.scrollY || 0;
-let targetScrollY = window.scrollY || 0;
-
-window.addEventListener("scroll", () => {
-  targetScrollY = window.scrollY;
-}, { passive: true });
-
-function updateScrollCamera() {
-  scrollY += (targetScrollY - scrollY) * 0.08;
-  const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
-  const progress = scrollY / maxScroll;
-
-  camera.position.z = 12 - progress * 130;
-  camera.position.x = Math.sin(progress * Math.PI * 4) * 3.2;
-  camera.position.y = Math.cos(progress * Math.PI * 3) * 1.4;
-  camera.rotation.z = Math.sin(progress * Math.PI * 2) * 0.04;
-
-  stars.rotation.y = progress * 2.2;
-  galaxy.rotation.y = progress * 4.2;
-  galaxy.rotation.z = progress * 1.5;
-}
-
-let isRendering = true;
-function animate() {
-  if (!isRendering) return;
-  requestAnimationFrame(animate);
-
-  updateScrollCamera();
-
-  sun.rotation.y += 0.0015;
-  mercury.rotation.y += 0.004;
-  venus.rotation.y += 0.003;
-  earth.rotation.y += 0.004;
-  earthClouds.rotation.y += 0.0055;
-  moon.rotation.y += 0.006;
-  mars.rotation.y += 0.0045;
-  saturn.rotation.y += 0.0038;
-  jupiter.rotation.y += 0.0042;
-  uranus.rotation.y += 0.0032;
-  neptune.rotation.y += 0.0034;
-  saturnRing.rotation.z += 0.0015;
-
-  const now = Date.now();
-  earthGlow.scale.setScalar(1 + Math.sin(now * 0.0018) * 0.035);
-  marsGlow.scale.setScalar(1 + Math.sin(now * 0.002) * 0.03);
-  saturnGlow.scale.setScalar(1 + Math.sin(now * 0.0017) * 0.025);
-  jupiterGlow.scale.setScalar(1 + Math.sin(now * 0.0016) * 0.02);
-
-  stars.rotation.x += 0.00015;
-  stars.rotation.y += 0.0002;
-  galaxy.rotation.y += 0.0005;
-
-  meteors.forEach((meteor) => {
-    meteor.position.x -= 0.07;
-    meteor.position.y -= 0.045;
-    meteor.position.z += 0.07;
-    if (meteor.position.x < -35 || meteor.position.y < -22 || meteor.position.z > 15) {
-      meteor.position.set(
-        Math.random() * 55 + 10,
-        Math.random() * 30 + 8,
-        Math.random() * -95
-      );
-    }
-  });
-
-  renderer.render(scene, camera);
-}
-
-animate();
-
-// Pause rendering when tab is hidden to save battery & GPU
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
-    isRendering = false;
-  } else {
-    if (!isRendering) {
-      isRendering = true;
-      animate();
-    }
-  }
-});
-
-window.addEventListener("resize", () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-}, { passive: true });
+  }, 500);
+}, 5000);
 </script>
 
 </body>
