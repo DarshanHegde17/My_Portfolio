@@ -2566,6 +2566,211 @@ form .button-area {
     margin-right: 0.5rem;
 }
 
+/* Certificates Auto-Scrolling Showcase (Right to Left) */
+.certificates-marquee-header {
+  text-align: center;
+  margin: 4.5rem 0 1.5rem;
+}
+.certificates-marquee-header h3 {
+  font-size: 2.5rem;
+  color: var(--text-color);
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+}
+.certificates-marquee-header h3 span {
+  color: var(--main-color);
+}
+.certificates-marquee-header h3 i {
+  color: var(--main-color);
+  margin-right: 0.8rem;
+}
+.certificates-marquee-header p {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+  font-family: "Nunito", sans-serif;
+}
+
+.certificates-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 2.5rem 0;
+  margin: 1rem 0 2rem;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.certificates-scroll-track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  animation: scrollCertificatesLeft 32s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Stop/Pause scrolling when cursor is in any certificate box or anywhere on the track */
+.certificates-scroll-wrapper:hover .certificates-scroll-track,
+.certificates-scroll-track:hover,
+.certificates-scroll-track .certificate-scroll-card:hover {
+  animation-play-state: paused !important;
+}
+
+@keyframes scrollCertificatesLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 1.25rem));
+  }
+}
+
+.certificates-scroll-track .certificate-scroll-card {
+  flex: 0 0 34rem;
+  width: 34rem;
+  height: 29rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 140, 0, 0.4);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 140, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  background: rgba(15, 15, 15, 0.95);
+  cursor: pointer;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.certificates-scroll-track .certificate-scroll-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #ff8c00;
+  box-shadow: 0 1.2rem 3rem rgba(255, 140, 0, 0.55), 0 0 25px rgba(255, 140, 0, 0.4);
+}
+
+.certificates-scroll-track .certificate-scroll-card img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition: transform 0.4s ease;
+}
+
+.certificates-scroll-track .certificate-scroll-card:hover img {
+  transform: scale(1.06);
+}
+
+.certificates-scroll-track .certificate-scroll-card .content {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 72%;
+  left: 0;
+  background: rgba(0, 0, 0, 0.94);
+  display: flex;
+  flex-direction: column;
+  transition: top 0.35s ease;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.certificates-scroll-track .certificate-scroll-card:hover .content {
+  top: 22%;
+}
+
+.certificates-scroll-track .certificate-scroll-card .content .tag,
+.certificates-scroll-track .certificate-scroll-card .content .desc {
+  pointer-events: auto;
+}
+
+.certificates-scroll-track .certificate-scroll-card .content .tag {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 4.5rem;
+  width: 100%;
+  padding: 0 1.2rem;
+  background: #ff8c00;
+  color: #000;
+}
+
+.certificates-scroll-track .certificate-scroll-card .content .tag h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.certificates-scroll-track .certificate-scroll-card .content .tag .cert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  background: #000;
+  color: #ff8c00;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1.2rem;
+  white-space: nowrap;
+}
+
+.certificates-scroll-track .certificate-scroll-card .desc {
+  margin: 1.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.certificates-scroll-track .certificate-scroll-card .desc .issuer {
+  font-size: 1.35rem;
+  color: #ffa500;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.certificates-scroll-track .certificate-scroll-card .desc .issuer i {
+  color: var(--main-color);
+  margin-right: 0.5rem;
+}
+
+.certificates-scroll-track .certificate-scroll-card .desc .date {
+  font-size: 1.25rem;
+  color: #cccccc;
+  margin-bottom: 0.8rem;
+}
+
+.certificates-scroll-track .certificate-scroll-card .desc .date i {
+  color: var(--main-color);
+  margin-right: 0.5rem;
+}
+
+.certificates-scroll-track .certificate-scroll-card .desc .cert-summary {
+  font-size: 1.3rem;
+  color: var(--text-color);
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .certificates-scroll-track .certificate-scroll-card {
+    flex: 0 0 28rem;
+    width: 28rem;
+    height: 25rem;
+  }
+  .certificates-scroll-track .certificate-scroll-card .content .tag h3 {
+    font-size: 1.4rem;
+  }
+  .certificates-scroll-track .certificate-scroll-card .desc .cert-summary {
+    font-size: 1.15rem;
+  }
+}
+
 /* ===== 3D SCROLLING & SECTION STYLES ===== */
 /* Fix About Section Image */
 .about .image img {

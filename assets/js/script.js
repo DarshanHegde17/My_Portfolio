@@ -228,6 +228,7 @@ if (typeof ScrollReveal !== 'undefined') {
 
     /* SCROLL CERTIFICATES */
     srtop.reveal('.certificates .box', { interval: 120 });
+    srtop.reveal('.certificates-scroll-wrapper', { delay: 150 });
 
     /* SCROLL EXPERIENCE */
     srtop.reveal('.experience .timeline', { delay: 150 });
